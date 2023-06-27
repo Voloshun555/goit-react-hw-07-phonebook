@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectContactsList } from 'redux/selectors';
- import { addContact } from 'redux/operations';
+import { addContact } from 'redux/operations';
 import { nanoid } from 'nanoid';
 import css from './contactForm.module.css';
 
@@ -11,8 +11,6 @@ const ContactForm = () => {
 
   const dispatch = useDispatch();
   const contactsList = useSelector(selectContactsList);
-  console.log(contactsList)
-  
 
   const handleSubmitt = e => {
     e.preventDefault();
