@@ -2,12 +2,11 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectContactsList } from 'redux/selectors';
 import { addContact } from 'redux/operations';
-import { nanoid } from 'nanoid';
 import css from './contactForm.module.css';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setNumber] = useState('');
 
   const dispatch = useDispatch();
   const contactsList = useSelector(selectContactsList);
@@ -16,20 +15,20 @@ const ContactForm = () => {
     e.preventDefault();
     setName('');
     setNumber('');
-    addContacts({ name, number });
+    addContacts({ name, phone });
   };
 
-  const addContacts = ({ name, number }) => {
-    const contact = { id: nanoid(), name, number };
+  const addContacts = ({ name, phone }) => {
+    const contact = {name, phone };
     const nameToLowerCase = name.toLowerCase();
     const contacts = contactsList.find(
       contact =>
         contact.name.toLowerCase() === nameToLowerCase ||
-        contact.number === number
+        contact.phone === phone
     );
 
     if (contacts) {
-      alert(`${name} або ${number} вже є в телефонній книзі`);
+      alert(`${name} або ${phone} вже є в телефонній книзі`);
       return;
     }
     dispatch(addContact(contact));
@@ -43,7 +42,7 @@ const ContactForm = () => {
       case 'name':
         setName(value);
         break;
-      case 'number':
+      case 'phone':
         setNumber(value);
         break;
       default:
@@ -73,11 +72,11 @@ const ContactForm = () => {
             className={css.inputTitle}
             onChange={handleChange}
             type="tel"
-            name="number"
+            name="phone"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
-            value={number}
+            value={phone}
           />
         </label>
 
